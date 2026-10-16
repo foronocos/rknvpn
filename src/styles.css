@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --color-bg: #07080c;
+  --color-surface: #12151c;
+  --color-surface-2: #1a1f2a;
+  --color-fg: #e8eef6;
+  --color-muted: #8b97a8;
+  --color-line: #243041;
+  --color-cyan: #2ee6d6;
+  --color-magenta: #ff3d8a;
+  --color-ink: #07110f;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      color-mix(in oklab, var(--color-cyan) 16%, transparent) 1px,
+      transparent 0
+    );
+    background-size: 28px 28px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 2px;
+  }
+}
+
+.tap {
+  transition:
+    transform 150ms ease-out,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.tap:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.gradient-text {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-cyan),
+    var(--color-fg) 42%,
+    var(--color-magenta),
+    var(--color-cyan)
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-shift 9s linear infinite;
+}
+
+.soft-glow {
+  animation: soft-glow 3.6s ease-in-out infinite;
+}
+
+.reveal {
+  animation: rise 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal-1 {
+  animation-delay: 90ms;
+}
+
+.reveal-2 {
+  animation-delay: 180ms;
+}
+
+.reveal-3 {
+  animation-delay: 270ms;
+}
+
+.eq-bar {
+  display: block;
+  width: 3px;
+  height: 16px;
+  transform-origin: bottom;
+  border-radius: 999px;
+  background: var(--color-cyan);
+  animation: eq 0.9s ease-in-out infinite;
+}
+
+.eq-bar:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.eq-bar:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+.eq-bar:nth-child(4) {
+  animation-delay: 0.36s;
+}
+
+.eq-off {
+  animation: none;
+  transform: scaleY(0.3);
+  opacity: 0.35;
+}
+
+.promo-wave {
+  animation: promo-wave 900ms ease-out;
+}
+
+.confetti-bit {
+  position: absolute;
+  top: 28%;
+  width: 8px;
+  height: 8px;
+  animation: confetti-fall 1100ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes gradient-shift {
+  to {
+    background-position: 220% center;
+  }
+}
+
+@keyframes soft-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 8px color-mix(in oklab, var(--color-cyan) 35%, transparent);
+  }
+  50% {
+    text-shadow:
+      0 0 14px color-mix(in oklab, var(--color-cyan) 70%, transparent),
+      0 0 28px color-mix(in oklab, var(--color-cyan) 30%, transparent);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes eq {
+  0%,
+  100% {
+    transform: scaleY(0.28);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes promo-wave {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-magenta) 65%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 16px transparent;
+  }
+}
+
+@keyframes confetti-fall {
+  to {
+    transform: translate(var(--dx), 48vh) rotate(160deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .gradient-text,
+  .soft-glow,
+  .reveal,
+  .eq-bar,
+  .promo-wave,
+  .confetti-bit {
+    animation: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
